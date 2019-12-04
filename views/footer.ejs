@@ -1,12 +1,47 @@
 </div>
-    <div class="ui vertical footer segment" style="margin-top: 15px; ">
-      <div class="ui center aligned container">
-        <span style="color: #999;"><%= syzoj.config.title %> Powered by <a href="https://github.com/syzoj/syzoj" target="_blank">SYZOJ</a>.</span>
-      </div>
-    </div>
+<div class="ui vertical footer segment" style="margin-top: 15px; ">
+  <div class="ui center aligned container">
+    <span style="color: #999;line-height:1">
+      <p><%=syzoj.config.title %>  Powered by <a href="https://github.com/syzoj/syzoj" target="_blank">SYZOJ</a>.</p>
+        <p>Your Time:
+        <span id="user-timeoutput"></span>
+        <br>Server Time:
+        <span id="server-timeoutput"></span>
+        <br></span></p>
+  </div>
 </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.18.1/min/moment-with-locales.min.js"></script>
+<script>var output = document.getElementById("user-timeoutput");
+  var c;
+  setInterval(c = function() {
+    output.innerText = moment().format('YYYY-MM-DD HH:mm:ss');
+  },
+  1000);
+  c();
+
+  function getServerDate() {
+    fetch('/api/v2/gettime')
+	.then(function(response) {
+    		return response.json();
+  	})
+  	.then(function(myJson) {
+    		console.log('Server Time: '+moment(myJson.result).format('YYYY-MM-DD HH:mm:ss'));
+		return myJson.result;
+  	});
+  }
+  var st = moment(getServerDate());
+  var soutput = document.getElementById("server-timeoutput");
+  var sc;
+  setInterval(sc = function() {
+    soutput.innerText = st.format('YYYY-MM-DD HH:mm:ss');
+    st.add(1, 's');
+  },
+  1000);
+  c();</script>
 <script data-cfasync="false" src="<%- lib('semantic-ui/2.4.1/semantic.min.js') %>"></script>
 <script src="<%- lib('Chart.js/2.7.3/Chart.bundle.min.js') %>"></script>
 <script src="<%- selfLib('script.js') %>?20170710"></script>
 </body>
+
 </html>

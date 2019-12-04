@@ -13,12 +13,13 @@
             </tr>
           </thead>
           <tbody>
+            <% if (res.locals.user) { %>
             <% for (let item of notices) { %>
                 <tr>
                     <td><a href="<%= item.url %>"><%= item.title %></a></td>
                     <td><%= item.date %></td>
                 </tr>
-            <% } %>
+            <% }} %>
           </tbody>
         </table>
       </div>
@@ -27,8 +28,8 @@
         <table class="ui very basic center aligned table" style="table-layout: fixed; ">
           <thead>
             <tr>
-	            <th style="width: 50px; ">#</th>
-	            <th style="width: 170px; ">用户名</th>
+	            <th style="width: 40px; ">#</th>
+	            <th style="width: 240px; ">用户名</th>
 	            <th>个性签名</th>
             </tr>
           </thead>
@@ -52,7 +53,7 @@
             %>
                 <tr>
                     <td><b><%= i %></b></td>
-                    <td><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% if (user.nameplate) { %><%- user.nameplate %><% } %></td>
+                    <td><a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>"><%= user.username %></a><% if (user.nameplate) { %><%- user.nameplate %><% } %><% if (user.is_admin) { %><div class="ui mini purple label">管理员</div><% } %></td>
                     <td style="font-content">
                       <script id="user-infomation-script-<%= i %>" data-cfasync="false">
                       (function () {
@@ -102,6 +103,7 @@
             </tr>
 	  </thead>
 	  <tbody>
+            <% if (res.locals.user) { %>
 	    <%
 	    for (let problem of problems) {
 	    %>
@@ -109,7 +111,7 @@
 	      <td><a href="<%= syzoj.utils.makeUrl(['problem', problem.id]) %>"><%= problem.title %></a></td>
 	      <td><%= problem.time %></td>
 	    </tr>
-	    <% } %>
+	    <% } }%>
 	  </tbody>
 	</table>
       </div>
@@ -180,7 +182,7 @@
       </div>
       <h4 class="ui top attached block header"><i class="ui calendar icon"></i>近期比赛</h4>
       <div class="ui bottom attached <% if (!contests || !contests.length) { %>center aligned <% } %>segment">
-        <% if (!contests || !contests.length) { %>
+        <% if (!contests || !contests.length || !res.locals.user) { %>
         还没有举行过任何比赛
         <% } else { %>
         <table class="ui very basic center aligned table">

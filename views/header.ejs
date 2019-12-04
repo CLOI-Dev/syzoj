@@ -72,7 +72,7 @@
               <% if (user) { %>
               <a href="<%= syzoj.utils.makeUrl(['user', user.id]) %>" style="color: inherit; ">
               <div class="ui simple dropdown item">
-                <%= user.username %><% if (user.nameplate) { %><%- user.nameplate %><% } %> <i class="dropdown icon"></i>
+                <%= user.username %><% if (user.nameplate) { %><%- user.nameplate %><% } %> <% if (user.is_admin) { %><div class="ui mini purple label">管理员</div><% } %><i class="dropdown icon"></i>
                 <div class="menu">
                   <a class="item" href="<%= syzoj.utils.makeUrl(['user', user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
                   <% if (user.is_admin) { %>
@@ -117,3 +117,4 @@
     </div>
     <div style="margin-top: 28px; ">
     <div class="ui main container">
+<script src="https://cdn.jsdelivr.net/npm/moment@2.18.1/min/moment-with-locales.min.js"></script>
