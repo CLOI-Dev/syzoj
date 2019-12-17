@@ -273,8 +273,9 @@ app.post('/api/markdown', async (req, res) => {
 app.get('/static/uploads/answer/:md5', async (req, res) => {
   try {
     //res.sendFile(File.resolvePath('answer', req.params.md5));
+     if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let md5 = req.params.md5;
-    if (typeof md5 !== 'string' || !/^[0-9a-fA-F]+$/.test(md5)) throw new ErrorMessage("MD5格式错误！(任意文件读取漏洞好玩不？)");
+    if (typeof md5 !== 'string' || !/^[0-9a-fA-F]+$/.test(md5)) throw new ErrorMessage("MD5格式错误，请检查您的操作！");
     res.sendFile(File.resolvePath('answer', md5));
   } catch (e) {
     res.status(500).send(e);
