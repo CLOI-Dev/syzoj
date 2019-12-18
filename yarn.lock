@@ -3735,18 +3735,18 @@ tar-stream@^1.5.2:
     to-buffer "^1.1.1"
     xtend "^4.0.0"
 
-temp-dir@^1.0.0:
-  version "1.0.0"
-  resolved "https://registry.npm.taobao.org/temp-dir/download/temp-dir-1.0.0.tgz#0a7c0ea26d3a39afa7e0ebea9c1fc0bc4daa011d"
-  integrity sha1-CnwOom06Oa+n4OvqnB/AvE2qAR0=
-
-tempfile@^2.0.0:
+temp-dir@^2.0.0:
   version "2.0.0"
-  resolved "https://registry.npm.taobao.org/tempfile/download/tempfile-2.0.0.tgz#6b0446856a9b1114d1856ffcbe509cccb0977265"
-  integrity sha1-awRGhWqbERTRhW/8vlCczLCXcmU=
+  resolved "https://registry.yarnpkg.com/temp-dir/-/temp-dir-2.0.0.tgz#bde92b05bdfeb1516e804c9c00ad45177f31321e"
+  integrity sha512-aoBAniQmmwtcKp/7BzsH8Cxzv8OL736p7v1ihGb5e9DJ9kTwGWHrQrVB5+lfVDzfGrdRzXch+ig7LHaY1JTOrg==
+
+tempfile@^3.0.0:
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/tempfile/-/tempfile-3.0.0.tgz#5376a3492de7c54150d0cc0612c3f00e2cdaf76c"
+  integrity sha512-uNFCg478XovRi85iD42egu+eSFUmmka750Jy7L5tfHI5hQKKtbPnxaSaXAbBqCDYrw3wx4tXjKwci4/QmsZJxw==
   dependencies:
-    temp-dir "^1.0.0"
-    uuid "^3.0.1"
+    temp-dir "^2.0.0"
+    uuid "^3.3.2"
 
 text-hex@1.0.x:
   version "1.0.0"
@@ -3997,7 +3997,7 @@ utils-merge@1.0.1:
   resolved "https://registry.npm.taobao.org/utils-merge/download/utils-merge-1.0.1.tgz#9f95710f50a267947b2ccc124741c1028427e713"
   integrity sha1-n5VxD1CiZ5R7LMwSR0HBAoQn5xM=
 
-uuid@^3.0.1, uuid@^3.3.2:
+uuid@^3.3.2:
   version "3.3.3"
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha1-RWjwIW54dg7h2/Ok0s9T4iQRKGY=

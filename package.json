@@ -71,7 +71,7 @@
     "stream-to-string": "^1.2.0",
     "syzoj-divine": "^1.0.2",
     "syzoj-renderer": "^1.0.5",
-    "tempfile": "^2.0.0",
+    "tempfile": "^3.0.0",
     "tmp-promise": "^2.0.2",
     "typeorm": "^0.2.21",
     "typescript": "^3.4.3",
