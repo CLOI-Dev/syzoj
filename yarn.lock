@@ -1999,10 +1999,12 @@ isurl@^1.0.0-alpha5:
     has-to-string-tag-x "^1.2.0"
     is-object "^1.0.1"
 
-javascript-time-ago@^1.0.30:
-  version "1.0.35"
-  resolved "https://registry.npm.taobao.org/javascript-time-ago/download/javascript-time-ago-1.0.35.tgz#737f12e8cfec3de660b91a64414b1ec23b8ecf04"
-  integrity sha1-c38S6M/sPeZguRpkQUsewjuOzwQ=
+javascript-time-ago@^2.0.4:
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/javascript-time-ago/-/javascript-time-ago-2.0.4.tgz#02a7e81a161d73e518202274d5f72835cc89e3b4"
+  integrity sha512-p4flGt34MFUT8BW+UtRN5BOq28qndYALMoqP18FeixUw4InfA7MRay/wkSOorB+wnxTfnWYpqy9U1kcbUEdk5Q==
+  dependencies:
+    relative-time-format "^0.1.3"
 
 js-yaml@^3.13.0, js-yaml@^3.13.1:
   version "3.13.1"
@@ -3169,6 +3171,11 @@ regenerator-runtime@^0.11.0:
   version "0.11.1"
   resolved "https://registry.npm.taobao.org/regenerator-runtime/download/regenerator-runtime-0.11.1.tgz#be05ad7f9bf7d22e056f9726cee5017fbf19e2e9"
   integrity sha1-vgWtf5v30i4Fb5cmzuUBf78Z4uk=
+
+relative-time-format@^0.1.3:
+  version "0.1.3"
+  resolved "https://registry.yarnpkg.com/relative-time-format/-/relative-time-format-0.1.3.tgz#d50f49d13f97c7f801afba600b1a4a0890755df2"
+  integrity sha512-0O6i4fKjsx8qhz57zorG+LrIDnF9pSvP5s7H9R1Nb5nSqih5dvRyKzNKs6MxhL3bv4iwsz4DuDwAyw+c47QFIA==
 
 request-promise-core@1.1.3:
   version "1.1.3"

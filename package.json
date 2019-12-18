@@ -42,7 +42,7 @@
     "file-size": "^1.0.0",
     "fs-extra": "^8.1.0",
     "gravatar": "^1.8.0",
-    "javascript-time-ago": "^1.0.30",
+    "javascript-time-ago": "^2.0.4",
     "js-yaml": "^3.13.0",
     "jsdom": "^15.2.1",
     "jsondiffpatch": "0.2.5",
