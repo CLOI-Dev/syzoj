@@ -2547,10 +2547,10 @@ multer@^1.4.2:
     type-is "^1.6.4"
     xtend "^4.0.0"
 
-mysql2@^2.0.2:
-  version "2.0.2"
-  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-2.0.2.tgz#178c1c018a9283751ffa8dcf67ed720bb5b1c6a6"
-  integrity sha512-n9Tiw8LzrfOnH1CLFw0AWJlkQLOWMSr2Q+/aF5jRJ7SRRJLGrY9FidhyoTEhF0FxQYE+xABvXwiZl4b61Mt4eg==
+mysql2@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/mysql2/-/mysql2-2.1.0.tgz#55ecfd4353114c148cc4c253192dbbfd000e6642"
+  integrity sha512-9kGVyi930rG2KaHrz3sHwtc6K+GY9d8wWk1XRSYxQiunvGcn4DwuZxOwmK11ftuhhwrYDwGx9Ta4VBwznJn36A==
   dependencies:
     cardinal "^2.1.1"
     denque "^1.4.1"
