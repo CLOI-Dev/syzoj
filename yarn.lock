@@ -2593,10 +2593,10 @@ nice-try@^1.0.4:
   resolved "https://registry.npm.taobao.org/nice-try/download/nice-try-1.0.5.tgz#a3378a7696ce7d223e88fc9b764bd7ef1089e366"
   integrity sha1-ozeKdpbOfSI+iPybdkvX7xCJ42Y=
 
-node-7z@^2.0.4:
-  version "2.0.4"
-  resolved "https://registry.yarnpkg.com/node-7z/-/node-7z-2.0.4.tgz#433689355b9d776740bf47c93084d75f62f33abb"
-  integrity sha512-O0hPxoGuV4aYp7IqWc/9iHr5B9K7Sb0JrgUqeh6dkO3aQOZIB4sXQvYj3OCYaO87oVZdr7H02iZe8GTKqhwYjw==
+node-7z@^2.0.5:
+  version "2.0.5"
+  resolved "https://registry.yarnpkg.com/node-7z/-/node-7z-2.0.5.tgz#3156510139527c4fe7a277fdd50d34e2cca97a43"
+  integrity sha512-f6vS64T2q53ZenPGD2DEmCN9l2qLJHLje49yDA7DE1ZDqxOV1dOoB/z4jzxJAjHwrvgi9EjddaMXnJWoio52jg==
   dependencies:
     cross-spawn "^7.0.1"
     debug "^4.1.1"
