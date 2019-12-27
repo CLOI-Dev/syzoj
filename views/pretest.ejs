@@ -1,0 +1,88 @@
+<% this.title = '初赛真题'; %>
+<% include header %>
+<div id="app">
+    年份：<select v-model="nyear">
+        <option value=0>全部</option>
+        <option value=2018>2018</option>
+        <option value=2017>2017</option>
+        <option value=2016>2016</option>
+        <option value=2015>2015</option>
+        <option value=2014>2014</option>
+        <option value=2013>2013</option>
+        <option value=2012>2012</option>
+        <option value=2011>2011</option>
+        <option value=2010>2010</option>
+        <option value=2009>2009</option>
+        <option value=2008>2008</option>
+        <option value=2007>2007</option>
+    </select>
+    组别：<select v-model="njs">
+        <option value="0">全部</option>
+        <option value="j">普及组</option>
+        <option value="s">提高组</option>
+    </select>
+    题目类型：<select v-model="ntype">
+        <option value="0">所有</option>
+        <option value="10">单选</option>
+        <option value="11">多选</option>
+        <option value="1">选择题</option>
+        <option value="2">问题求解</option>
+        <option value="3">阅读程序写结果</option>
+        <option value="4">完善程序</option>
+    </select> 
+    查看答案：<select v-model="answer">
+        <option value="show">显示答案</option>
+        <option value="noshow">不显示答案</option>
+    </select>
+    <div class="ui segment" v-for="p in pp"
+        v-if="(nyear==0||p['year']==nyear)&&(ntype=='0'||p['type']==ntype||(ntype=='1'&&p['type'][0]=='1'))&&(njs=='0'||p['js']==njs)">
+        {{ p['year'] }} - {{ {'j':'普及组','s':'提高组'}[p['js']] }} - {{ p['score'] }}分 <br />
+        <div v-html="p['description']"></div> <br />
+        <div v-if="p['type']=='10'">
+            <div v-for="row in p['questions'][0]['choices']">
+                <input type="radio" v-bind:name="p['id']" v-bind:value="row"> {{ row }}
+            </div>
+            <p class="answer" v-if="answer=='show'"> 答案: {{ p['questions'][0]['correctAnswers'][0] }} </p>
+        </div>
+        <div v-if="p['type']=='11'">
+            <div v-for="row in p['questions'][0]['choices']">
+                <input type="checkbox" v-bind:name="p['id']" v-bind:value="row"> {{ row }}
+            </div>
+            <p class="answer" v-if="answer=='show'"> 答案: {{ p['questions'][0]['correctAnswers'][0] }} </p>
+        </div>
+        <div v-if="p['type']=='2'">
+            <div v-for="row in p['questions']">
+                ({{ row['score'] }}分) {{ row['info'] }} <input type="text" style="width:100px"
+                    v-bind:name="p['id']" /><span class="answer" v-if="answer=='show'">{{ row['correctAnswers'][0] }}</span>
+            </div>
+        </div>
+        <div v-if="p['type']=='3'">
+            <div v-for="row in p['questions']">
+                ({{ row['score'] }}分) {{ row['info'] }} <input type="text" style="width:100px"
+                    v-bind:name="p['id']" /><span class="answer" v-if="answer=='show'">{{ row['correctAnswers'][0] }}</span>
+            </div>
+        </div>
+        <div v-if="p['type']=='4'">
+            <div v-for="row in p['questions']">
+                ({{ row['score'] }}分) {{ row['info'] }} <input type="text" style="width:100px"
+                    v-bind:name="p['id']" /><span class="answer" v-if="answer=='show'">{{ row['correctAnswers'][0] }}</span>
+            </div>
+        </div>
+    </form>
+</div>
+
+</div>
+</div>
+    <div class="ui vertical footer segment" style="margin-top: 15px; ">
+      <div class="ui center aligned container">
+        <span style="color: #999;">浙ICP备18038694号 | 青藤 OJ</span>
+      </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.1.1/dist/jquery.min.js"> </script>
+<script data-cfasync="false" src="https://cdn.jsdelivr.net/npm/syzoj-public-cdn@1.0.5/cdnjs/semantic-ui/2.4.1/semantic.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.6.10/vue.min.js"></script>
+<script src="<%- syzoj.utils.makeUrl(['self','pretest.js']) %>?20191014"></script>
+</body>
+</html>

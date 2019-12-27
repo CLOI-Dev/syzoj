@@ -1,0 +1,17 @@
+<% this.title = '拜师' %>
+<% include header %>
+<div class="padding">
+  <h3>成为 <%=teacher.username%> 老师的学生</h3>
+  <p><%=teacher.information %> </p>
+  <form class="ui form" action="<%= syzoj.utils.makeUrl(['teacher', teacher.id, 'join']) %>" method="post">
+      <div class="field">
+        <label>你的真实姓名，或老师知道的昵称</label>
+        <input type="text" name="title">
+      </div>
+      <div style="text-align: center; ">
+      <button type="submit" class="ui labeled submit icon button">
+        <i class="icon edit"></i> 成为老师的学生
+      </button>
+      </div>
+  </form>
+<% include footer %>

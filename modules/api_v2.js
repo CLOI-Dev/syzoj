@@ -28,7 +28,7 @@ app.get('/api/v2/search/users/:keyword*?', async (req, res) => {
       let result = [];
 
       result = users.map(x => ({ name: `${x.username}`, value: x.id, url: syzoj.utils.makeUrl(['user', x.id]) }));
-      if(res.locals.user) res.send({ success: true, results: result });
+      res.send({ success: true, results: result });
     }
   } catch (e) {
     syzoj.log(e);
@@ -66,7 +66,7 @@ app.get('/api/v2/search/problems/:keyword*?', async (req, res) => {
     });
 
     result = result.map(x => ({ name: `#${x.id}. ${x.title}`, value: x.id, url: syzoj.utils.makeUrl(['problem', x.id]) }));
-    if(res.locals.user) res.send({ success: true, results: result });
+    res.send({ success: true, results: result });
   } catch (e) {
     syzoj.log(e);
     res.send({ success: false });
@@ -91,7 +91,7 @@ app.get('/api/v2/search/tags/:keyword*?', async (req, res) => {
     let result = tags.slice(0, syzoj.config.page.edit_problem_tag_list);
 
     result = result.map(x => ({ name: x.name, value: x.id }));
-    if(res.locals.user) res.send({ success: true, results: result });
+    res.send({ success: true, results: result });
   } catch (e) {
     syzoj.log(e);
     res.send({ success: false });
@@ -137,15 +137,3 @@ app.apiRouter.get('/api/v2/download/:token', async (req, res) => {
     });
   }
 })
-
-app.apiRouter.get('/api/v2/gettime', async (req, res) => {
-   try {
-	let time=Date.now();
-	res.send({ success: true, result: time });
-  } catch (e) {
-    syzoj.log(e);
-    res.send({ success: false });
-  }
-})
-
-

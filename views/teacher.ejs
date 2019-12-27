@@ -1,0 +1,70 @@
+<% this.title = '师门' %>
+<% include header %>
+
+<div class="padding">
+  <h2 class="ui header">
+    <i class="id badge icon"></i>
+    <div class="content"><%= teacher.username %>
+      <div class="sub header"><%=teacher.information%></div>
+    </div>
+  </h2>
+  <% if (teacher.id==curUser.id) {%>
+    <a class="ui labeled icon mini green button" href="<%=syzoj.utils.makeUrl(['homework', 0, 'edit'])%>"><i class="plus icon"></i> 布置作业 </a>
+  <% } %>
+  <h2 class="ui dividing header">学生</h2> 
+  <% for (let user of users) { %>
+      <% if (user.sex == 1) { %>
+        <a class="ui teal label" style="margin: 5px;"> 
+        <i class="mars icon"></i>
+      <% }else if(user.sex == -1){ %>
+        <a class="ui pink label" style="margin: 5px;">
+        <i class="venus icon"></i>
+      <% }else{ %>
+        <a class="ui orange label" style="margin: 5px;">
+        <i class="venus mars icon"></i>
+      <% } %>
+      <%= user.username %>
+      <div class="detail"><%= user.title %></div>
+    </a>
+  <% } %>
+
+  <h2 class="ui dividing header">作业</h2>
+  <div class="ui middle aligned divided list">
+    <% for (let homework of homeworks) { if(homework.active) { %>
+      <div class="item">
+        <% if (teacher.id==curUser.id) {%>
+        <div class="right floated content">
+          <a class="ui button" href="<%= syzoj.utils.makeUrl(['homework', homework.id, 'edit']) %>">编辑</a>
+        </div>
+        <% } %>
+        <i class="flag icon"></i>
+        <div class="content"><div class="header"> 
+          <a href="<%= syzoj.utils.makeUrl(['homework', homework.id]) %>">
+            <%= homework.name %>
+          </a>
+          <% if(homework.users.includes(curUser.id)) { %><div class="ui red horizontal label">布置给我的</div><% } %>
+        </div><%=homework.users.length%>人</div>
+      </div>
+    <% } } %>
+  </div>
+  <% if (teacher.id==curUser.id) {%>
+  <h2 class="ui dividing header">未启用作业（仅教师可见）</h2>
+  <div class="ui middle aligned divided list">
+    <% for (let homework of homeworks) { if(!homework.active) { %>
+      <div class="item">
+        <div class="right floated content">
+          <a class="ui button" href="<%= syzoj.utils.makeUrl(['homework', homework.id, 'edit']) %>">编辑</a>
+        </div>
+        <i class="archive icon"></i>
+        <div class="content"><div class="header">
+          <a href="<%= syzoj.utils.makeUrl(['homework', homework.id]) %>">
+            <%=homework.name%>
+          </a>
+        </div><%=homework.users.length%>人</div>
+      </div>
+    <% } } %>
+  </div>
+  <% } %>
+</div>
+
+<% include footer %>

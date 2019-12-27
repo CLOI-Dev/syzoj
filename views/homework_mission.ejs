@@ -1,0 +1,30 @@
+<% this.title = '实验功能-查看学生训练完成情况' %>
+<% include header %>
+        <h3 class="ui dividing header"> 训练完成情况 </h3>
+	<div style="overflow:auto;width:100%">
+        <table width="auto" style="white-space:nowrap" class="ui celled table"> 
+            <thead>
+              <tr>
+                <th class="one wide" style="text-align: center">姓名</th>
+                <% for (let problem of problems) { %>
+                  <th class="one wide"><%=problem.id%></th>
+                <% } %>
+              </tr>
+            </thead>
+            <tbody>
+              <% for (let student of students) { %>
+                <tr>
+                  <td><%=student.username%></td>
+                  <% for (let problem of problems) { %>
+                    <% if(result[student.id][problem.id]) { %>
+                      <td><%=result[student.id][problem.id].score%></td>  
+                    <% } else { %>
+                      <td> no submit </td>  
+                    <% } %>
+                  <% } %>
+                <tr>
+              <% } %>
+            </tbody>
+        </table>  
+	</div>      
+<% include footer %>

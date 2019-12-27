@@ -22,8 +22,6 @@ const displayConfig = {
 // s is JudgeState
 app.get('/submissions', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     const curUser = res.locals.user;
 
     let query = JudgeState.createQueryBuilder();
@@ -155,8 +153,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/submission/:id', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     const id = parseInt(req.params.id);
     const judge = await JudgeState.findById(id);
     if (!judge) throw new ErrorMessage("提交记录 ID 不正确。");
@@ -193,6 +189,8 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
     }
 
     displayConfig.showRejudge = await judge.problem.isAllowedEditBy(res.locals.user);
+    displayConfig.showTestdata = await judge.problem.isAllowedEditBy(res.locals.user);
+
     res.render('submission', {
       info: getSubmissionInfo(judge, displayConfig),
       roughResult: getRoughResult(judge, displayConfig, false),
@@ -217,8 +215,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.post('/submission/:id/rejudge', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let id = parseInt(req.params.id);
     let judge = await JudgeState.findById(id);
 

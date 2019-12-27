@@ -7,7 +7,7 @@ const ContestPlayer = syzoj.model('contest_player');
 // Ranklist
 app.get('/ranklist', async (req, res) => {
   try {
-        const sort = req.query.sort || syzoj.config.sorting.ranklist.field;
+    const sort = req.query.sort || syzoj.config.sorting.ranklist.field;
     const order = req.query.order || syzoj.config.sorting.ranklist.order;
     if (!['ac_num', 'rating', 'id', 'username'].includes(sort) || !['asc', 'desc'].includes(order)) {
       throw new ErrorMessage('错误的排序参数。');
@@ -15,6 +15,9 @@ app.get('/ranklist', async (req, res) => {
     let paginate = syzoj.utils.paginate(await User.countForPagination({ is_show: true }), req.query.page, syzoj.config.page.ranklist);
     let ranklist = await User.queryPage(paginate, { is_show: true }, { [sort]: order.toUpperCase() });
     await ranklist.forEachAsync(async x => x.renderInformation());
+    await ranklist.forEachAsync(async x => {
+      x.privileges= await x.getPrivileges()
+    });
 
     res.render('ranklist', {
       ranklist: ranklist,
@@ -75,13 +78,13 @@ app.post('/logout', async (req, res) => {
 // User page
 app.get('/user/:id', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let user = await User.findById(id);
     if (!user) throw new ErrorMessage('无此用户。');
     user.ac_problems = await user.getACProblems();
     user.articles = await user.getArticles();
     user.allowedEdit = await user.isAllowedEditBy(res.locals.user);
+    user.privileges= await user.getPrivileges();
 
     let statistics = await user.getStatistics();
     await user.renderInformation();
@@ -125,7 +128,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/user/:id/edit', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
     let id = parseInt(req.params.id);
     let user = await User.findById(id);
     if (!user) throw new ErrorMessage('无此用户。');
@@ -189,6 +191,7 @@ app.post('/user/:id/edit', async (req, res) => {
       await user.setPrivileges(privileges);
     }
 
+    user.school = req.body.school;
     user.information = req.body.information;
     user.sex = req.body.sex;
     user.public_email = (req.body.public_email === 'on');

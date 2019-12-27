@@ -18,8 +18,9 @@
     <% } %>
   </div>
   <h1><%= article.title %></h1>
+ 	<p style="margin-bottom: -5px; ">
 	<img style="vertical-align: middle; margin-bottom: 2px; margin-right: 2px; " src="<%= syzoj.utils.gravatar(article.user.email, 34) %>" width="17" height="17">
-	<b style="margin-right: 30px; "><a class="black-link" href="<%= syzoj.utils.makeUrl(['user', article.user_id]) %>"><%= article.user.username %></a><% if (article.user.nameplate) { %><%- article.user.nameplate %><% } %><% if (article.user.is_admin) { %><div class="ui mini purple label">管理员</div><% } %></b>
+	<b style="margin-right: 30px; "><a class="black-link" href="<%= syzoj.utils.makeUrl(['user', article.user_id]) %>"><%= article.user.username %></a><% if (article.user.nameplate) { %><%- article.user.nameplate %><% } %></b>
 	<b style="margin-right: 30px; "><i class="calendar icon"></i> <%= syzoj.utils.formatDate(article.public_time) %></b>
 	<% if (article.public_time !== article.update_time) { %><b style="margin-right: 30px; "><i class="edit icon"></i> <%= syzoj.utils.formatDate(article.update_time) %></b><% } %>
         <% if (article.allowedEdit) { %>
@@ -45,7 +46,7 @@
           </div>
         </div>
         <% } %>
- 	
+ 	</p>
   <div class="ui existing segment">
 	  <div id="content" class="font-content"><%- article.content %></div>
   </div>
@@ -94,16 +95,34 @@
   </div>
   <% } %>
     <% if (article.allowedComment) { %>
+    <% include monaco-editor %>
     <form class="ui reply form" method="post" action="<%= syzoj.utils.makeUrl(['article', article.id, 'comment']) %>">
-      <div class="field">
-        <textarea name="comment" class="markdown-edit"></textarea>
+      <div id="comment" class="editor editor-with-border" style="height: 200px; width: 100%; margin-bottom: 1em; ">
+        <%- this.showLoadingEditor(); %>
       </div>
+      <input type="hidden" name="comment">
       <div style="text-align: center; ">
-      <button id="submit_button" type="submit" class="ui labeled submit icon button">
+      <button id="submit_button" type="submit" class="ui disabled labeled submit icon button">
         <i class="icon edit"></i> 回复
       </button>
       </div>
     </form>
+    <script>
+      var editors = {
+        comment: { defaultValue: '' }
+      };
+      
+      window.onEditorLoaded(function () {
+        for (var name in editors) {
+          var editor = editors[name];
+          var editorElement = document.getElementById(name);
+          var input = document.getElementsByName(name)[0];
+          editor.editor = window.createMarkdownEditor(editorElement, editor.defaultValue, input);
+        }
+
+        $('#submit_button').removeClass('disabled');
+      });
+    </script>      
   <% } %>
 </div>
 <% include footer %>

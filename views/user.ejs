@@ -8,104 +8,60 @@
 }
 </style>
 <div class="padding">
-<div class="ui grid">
-    <div class="row">
-        <div class="five wide column">
-            <div class="ui card" style="width: 100%; " id="user_card">
-                <div class="blurring dimmable image" id="avatar_container">
-                    <% if (show_user.allowedEdit) { %>
-                    <div class="ui dimmer transition hidden">
-                        <div class="content">
-                            <div class="center">
-                                <a class="ui inverted button" href="<%= syzoj.utils.makeUrl(['user', show_user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
-                            </div>
+        <div class="ui grid">
+            <div class="row">
+                <div class="eleven wide column center aligned">
+                    <h4 class="ui horizontal divider header"><i class="code icon"></i> 个性签名 </h4>
+                    <div class="ui font-content"><%- show_user.information %></div>
+        
+                    <h4 class="ui horizontal divider header"><i class="graduation cap icon"></i> 学校 </h4>
+                    <div class="ui font-content"><%= show_user.school %></div>
+        
+                    <h4 class="ui horizontal divider header"><i class="chart line icon"></i> 比赛历史 </h4>
+                    <div class="ui font-content">
+                        <table class="ui very basic table">
+                            <thead>
+                                <tr>
+                                    <th>比赛</th>
+                                    <th>名次</th>
+                                    <th>积分</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% for (const history of ratingHistories) { %>
+                                <tr>
+                                    <td><%= history.contestName %></td>
+                                    <td><%= history.rank != null ? history.rank + " / " + history.participants : '' %></td>
+                                    <td><%= history.value %> 
+                                        <% if(history.delta != null) { %> 
+                                            <span class="<%= history.delta >= 0 ? 'rating_up' : 'rating_down' %>">
+                                            (<%= (history.delta < 0 ? '' : '+') + history.delta %>)
+                                        <% } %>
+                                    </td>
+                                </tr>
+                                <% } %>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h4 class="ui horizontal divider header"><i class="heart icon"></i> 通过的题目 </h4>
+                    <div class="ui font-content">
+                        <% for (let problem of show_user.ac_problems) { %>
+                            <a href="<%= syzoj.utils.makeUrl(['problem', problem]) %>"><%= problem %></a>
+                        <% } %>
+                    </div>
+        
+                    <h4 class="ui horizontal divider header"><i class="chart pie icon"></i> 过题统计 </h4> 
+                    <div class="ui">
+                        <div id="pie_chart_legend"></div>
+                        <div style="width: 260px; height: 260px; margin-left: 33.5px; ">
+                            <canvas style="width: 260px; height: 260px; " id="pie_chart"></canvas>
                         </div>
                     </div>
-                    <% } %>
-                    <img style="margin-top: -100%; " src="<%= syzoj.utils.gravatar(show_user.email, 1000) %>">
-                </div>
-                <div class="content">
-                    <div class="header"><%= show_user.username %><% if (show_user.nameplate) { %><%- show_user.nameplate %><% } %> <% if (show_user.is_admin) { %><div class="ui mini purple label">管理员</div><% } %><% if (show_user.sex == 1) { %><i class="man icon"></i><% } else if (show_user.sex == -1) { %><i class="woman icon"></i><% } %></div>
-                    <div class="meta">
-                        <a class="group"><%= show_user.is_admin ? '管理员' : '普通用户' %></a>
-                    </div>
-                </div>
-                <div class="extra content">
-                    <a><i class="check icon"></i>通过 <%= show_user.ac_problems.length %> 题</a>
-                    <a style="float: right; "><i class="star icon"></i>积分 <%= show_user.rating %></a>
-                </div>
-            </div>
-
-        </div>
-        <div class="eleven wide column">
-            <div class="ui grid">
-                <div class="row">
-                    <div class="sixteen wide column">
-                        <div class="ui grid">
-                            <div class="eight wide column">
-                                <div class="ui grid">
-                                    <div class="row">
-                                        <div class="column">
-                                           <h4 class="ui top attached block header">用户名</h4>
-                                           <div class="ui bottom attached segment"><%= show_user.username %><% if (show_user.nameplate) { %><%- show_user.nameplate %><% } %></div>
-                                        </div>
-                                    </div>
-                                    <% if (show_user.emailVisible) { %>
-                                      <div class="row">
-                                          <div class="column">
-                                              <h4 class="ui top attached block header">Email</h4>
-                                              <div class="ui bottom attached segment" class="font-content"><%= show_user.email %></div>
-                                          </div>
-                                      </div>
-                                    <% } %>
-                                    <div class="row">
-                                        <div class="column">
-                                            <h4 class="ui top attached block header">个性签名</h4>
-                                            <div class="ui bottom attached segment" class="font-content"><%- show_user.information %></div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="column">
-                                            <h4 class="ui top attached block header">注册于</h4>
-                                            <div class="ui bottom attached segment" class="font-content">
-                                                <%= syzoj.utils.formatDate(show_user.register_time) %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="column">
-                                            <h4 class="ui top attached block header">通过的题目</h4>
-                                            <div class="ui bottom attached segment">
-                                                <% for (let problem of show_user.ac_problems) { %>
-                                                    <a href="<%= syzoj.utils.makeUrl(['problem', problem]) %>"><%= problem %></a>
-                                                <% } %>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="eight wide column">
-                                <div class="ui grid">
-                                  <div class="row">
-                                      <div class="column">
-                                          <h4 class="ui top attached block header">统计</h4>
-                                          <div class="ui bottom attached segment">
-                                            <div id="pie_chart_legend"></div>
-                                            <div style="width: 260px; height: 260px; margin-left: 33.5px; "><canvas style="width: 260px; height: 260px; " id="pie_chart"></canvas></div>
-                                          </div>
-                                      </div>
-                                  </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="column">
-                        <h4 class="ui top attached block header">帖子</h4>
-                        <div class="ui bottom attached <% if (!show_user.articles.length) { %>center aligned <% } %>segment">
-													  <% if (!show_user.articles.length) { %>该用户从未发表帖子<% } else { %>
+        
+                    <h4 class="ui horizontal divider header"><i class="sticky note icon"></i> 帖子 </h4>
+                    <div class="ui <% if (!show_user.articles.length) { %>center aligned <% } %>">
+                        <% if (!show_user.articles.length) { %>该用户从未发表帖子<% } else { %>
                             <table class="ui very basic table">
                                 <thead>
                                     <tr>
@@ -116,51 +72,63 @@
                                 <tbody>
                                     <% for (let article of show_user.articles) { %>
                                     <tr>
-																			  <td><a href="<%= syzoj.utils.makeUrl(['article', article.id]) %>"><%= article.title %></a></td>
+                                        <td><a href="<%= syzoj.utils.makeUrl(['article', article.id]) %>"><%= article.title %></a></td>
                                         <td><%= syzoj.utils.formatDate(article.public_time) %></td>
                                     </tr>
                                     <% } %>
                                 </tbody>
                             </table>
-													  <% } %>
-                        </div>
+                        <% } %>
+                    </div>
+
+                    <% if (show_user.emailVisible) { %>
+                        <h4 class="ui horizontal divider header"><i class="envelope icon"></i> Email </h4>
+                        <div class="ui font-content center aligned" class="font-content"><%= show_user.email %></div>
+                    <% } %>
+        
+                    <h4 class="ui horizontal divider header"><i class="info icon"></i> 注册时间 </h4>
+                    <div class="ui font-content center aligned" class="font-content">
+                            <%= syzoj.utils.formatDate(show_user.register_time) %>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="column">
-                        <h4 class="ui top attached block header">比赛</h4>
-                        <div class="ui bottom attached segment">
-                            <table class="ui very basic table">
-                                <thead>
-                                    <tr>
-                                        <th>比赛</th>
-                                        <th>名次</th>
-                                        <th>积分</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <% for (const history of ratingHistories) { %>
-                                    <tr>
-                                        <td><%= history.contestName %></td>
-                                        <td><%= history.rank != null ? history.rank + " / " + history.participants : '' %></td>
-                                        <td><%= history.value %> 
-                                            <% if(history.delta != null) { %> 
-                                                <span class="<%= history.delta >= 0 ? 'rating_up' : 'rating_down' %>">
-                                                (<%= (history.delta < 0 ? '' : '+') + history.delta %>)
-                                            <% } %>
-                                        </td>
-                                    </tr>
-                                    <% } %>
-                                </tbody>
-                            </table>
+                <div class="five wide column">
+                    <div class="ui card" style="width: 100%; " id="user_card">
+                        <div class="blurring dimmable image" id="avatar_container">
+                            <% if (show_user.allowedEdit) { %>
+                            <div class="ui dimmer transition hidden">
+                                <div class="content">
+                                    <div class="center">
+                                        <a class="ui inverted button" href="<%= syzoj.utils.makeUrl(['user', show_user.id, 'edit']) %>"><i class="edit icon"></i>修改资料</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <% } %>
+                            <img style="margin-top: -100%; " src="<%= syzoj.utils.gravatar(show_user.email, 1000) %>">
+                        </div>
+                        <div class="content">
+                            <div class="header">
+                                <%= show_user.username %>
+                                <% if (show_user.nameplate) { %><%- show_user.nameplate %><% } %> <% if (show_user.sex == 1) { %>
+                                <i class="man icon"></i><% } else if (show_user.sex == -1) { %><i class="woman icon"></i><% } %>
+                            </div>
+                            <div class="meta">
+                                <% if (show_user.is_admin) { %><div class="ui label">超级管理员</div><% } %>
+                                <% if (show_user.privileges.includes('manage_problem')) { %> <div class="ui label">题目管理员</div>&nbsp&nbsp  <% } %>
+                                <% if (show_user.privileges.includes('manage_problem_tag')) { %> <div class="ui label">标签管理员</div>&nbsp&nbsp  <% } %>
+                                <% if (show_user.privileges.includes('manage_user')) { %> <div class="ui label">用户管理员</div>&nbsp&nbsp  <% } %>
+                                <% if (show_user.privileges.includes('teacher')) { %><div class="ui label">老师 </div><% } %>
+                            </div>
+                        </div>
+                        <div class="extra content">
+                            <a><i class="check icon"></i>通过 <%= show_user.ac_problems.length %> 题</a>
+                            <a style="float: right; "><i class="star icon"></i>积分 <%= show_user.rating %></a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</div>
-</div>
+        </div>
+            
 <script>
 $(function () {
 <% if (show_user.allowedEdit) { %>

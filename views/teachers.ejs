@@ -1,0 +1,56 @@
+<% this.title = '所有老师' %>
+    <% include header %>
+
+        <div class="padding">
+            <h2 class="ui header">
+                <i class="id badge icon"></i>
+                <div class="content">所有老师
+                    <div class="sub header">成为老师的学生，跟随老师学习！</div>
+                </div>
+            </h2>
+            <div class="ui bulleted list">
+                <div class="item">
+                    <div>老师权限</div>
+                    <div class="list">
+                        <div class="item">查看全站提交的代码</div>
+                        <div class="item">给您的学生布置作业</div>
+                        <div class="item">查看您学生的作业完成情况</div>
+                        <div class="item">在题目下方，给自己的学生留言</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>如何成为老师？</div>
+                    <div class="list">
+                        <div class="item">修改个人资料，填写正确的学校名，然后发邮件到 djs@qingtengbc.com 申请即可</div>
+                        <div class="item">申请格式：学校名称-老师姓名-常用联系方式-老师OJ账号-学生OJ账号1-学生OJ账号2-...</div>
+                    </div>
+                </div>
+                <div class="item">
+                    <div>如何加入自己老师的团队？</div>
+                    <div class="list">
+                        <div class="item">在下方找到自己的老师，点击加入老师团队即可</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ui four column grid">
+                <% for (let user of users) {  
+                    if (user.privileges.includes("teacher")) { %>
+                    <div class="column">
+                        <div class="ui fluid card">
+                            <div class="content">
+                                <div class="header">
+                                    <%= user.user.username %>
+                                </div>
+                                <div class="description" style="height : 50px">
+                                    <%- user.user.information %>
+                                </div>
+                            </div>
+                            <a href="<%= syzoj.utils.makeUrl(['teacher', user.user.id, 'join']) %>" class="ui bottom attached button"><i class="add icon"></i> 成为老师的学生 </a>
+                        </div>
+                    </div>
+                    <% }} %>
+            </div>
+        </div>
+
+        <% include footer %>

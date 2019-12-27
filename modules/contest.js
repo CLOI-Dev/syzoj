@@ -10,8 +10,6 @@ const { getSubmissionInfo, getRoughResult, processOverallResult } = require('../
 
 app.get('/contests', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let where;
     if (res.locals.user && res.locals.user.is_admin) where = {}
     else where = { is_public: true };
@@ -37,8 +35,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/:id/edit', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     if (!res.locals.user || !res.locals.user.is_admin) throw new ErrorMessage('您没有权限进行此操作。');
 
     let contest_id = parseInt(req.params.id);
@@ -69,8 +65,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.post('/contest/:id/edit', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     if (!res.locals.user || !res.locals.user.is_admin) throw new ErrorMessage('您没有权限进行此操作。');
 
     let contest_id = parseInt(req.params.id);
@@ -125,8 +119,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/:id', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     const curUser = res.locals.user;
     let contest_id = parseInt(req.params.id);
 
@@ -231,8 +223,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/:id/ranklist', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.findById(contest_id);
     const curUser = res.locals.user;
@@ -307,8 +297,6 @@ function getDisplayConfig(contest) {
 
 app.get('/contest/:id/submissions', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.findById(contest_id);
     if (!contest.is_public && (!res.locals.user || !res.locals.user.is_admin)) throw new ErrorMessage('比赛未公开，请耐心等待 (´∀ `)');
@@ -436,8 +424,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/submission/:id', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     const id = parseInt(req.params.id);
     const judge = await JudgeState.findById(id);
     if (!judge) throw new ErrorMessage("提交记录 ID 不正确。");
@@ -489,8 +475,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/:id/problem/:pid', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let contest_id = parseInt(req.params.id);
     let contest = await Contest.findById(contest_id);
     if (!contest) throw new ErrorMessage('无此比赛。');
@@ -540,8 +524,6 @@ if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本O
 
 app.get('/contest/:id/:pid/download/additional_file', async (req, res) => {
   try {
-if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
-
     let id = parseInt(req.params.id);
     let contest = await Contest.findById(id);
     if (!contest) throw new ErrorMessage('无此比赛。');

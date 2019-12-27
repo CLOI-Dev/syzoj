@@ -3,6 +3,7 @@ let Article = syzoj.model('article');
 let Contest = syzoj.model('contest');
 let Problem = syzoj.model('problem');
 let Divine = require('syzoj-divine');
+let fs = require('fs');
 let TimeAgo = require('javascript-time-ago');
 let zh = require('../libs/timeago');
 TimeAgo.locale(zh);
@@ -15,6 +16,16 @@ app.get('/', async (req, res) => {
     });
     await ranklist.forEachAsync(async x => x.renderInformation());
 
+    let schools = 
+      (await User.createQueryBuilder()
+        .select('school')
+        .addSelect("COUNT(school)","count")
+        .groupBy("school")
+        .orderBy("count", "DESC")
+      .getRawMany()).map(record => ({
+        school:record.school,
+        count:record.count}
+      ));
     let notices = (await Article.find({
       where: { is_notice: true }, 
       order: { public_time: 'DESC' }
@@ -41,13 +52,31 @@ app.get('/', async (req, res) => {
       time: timeAgo.format(new Date(problem.publicize_time)),
     }));
 
+    let codeforces = [];
+    let codeforces_ori = fs.readFileSync('contest.list');
+    try{
+      codeforces_ori=await JSON.parse(codeforces_ori);
+      for(let x of codeforces_ori['result']){
+        if(x.phase=='BEFORE'){
+          codeforces.push(x);
+        }
+      }
+      await codeforces.sort(function(a,b){
+        return a.startTimeSeconds-b.startTimeSeconds;
+      });
+    }catch(e){
+      syzoj.log(e);
+      codeforces = [];
+    }
     res.render('index', {
       ranklist: ranklist,
       notices: notices,
       fortune: fortune,
       contests: contests,
       problems: problems,
-      links: syzoj.config.links
+      schools: schools,
+      links: syzoj.config.links,
+      codeforces: codeforces
     });
   } catch (e) {
     syzoj.log(e);

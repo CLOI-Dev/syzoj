@@ -1,0 +1,76 @@
+<% this.title = '试炼之地' %>`
+<% include header %>
+<% 
+  let levels = syzoj.config.training_levels;
+%>
+<div class="padding">
+    <% if (allowedManageProblem) { %>
+      <form class="ui mini form">
+        <div class="inline fields" style="margin-bottom: 25px; white-space: nowrap; ">
+          <a href="<%= syzoj.utils.makeUrl(['training', 'mission', 0, 'edit']) %>" class="ui labeled icon mini green button" style="margin-left: auto; ">
+            <i class="plus icon"></i> 
+            添加分类
+          </a>
+       </div>
+      </form>
+      
+    <% } %>
+
+    <div id="context">
+      <div class="ui secondary menu">
+        <% let idx0=0; for (let nowLevel in levels) { %>
+        <a class="item <%if(idx0==0){idx0=1;%>active<%}%>" data-tab="<%=nowLevel%>"><%= nowLevel %></a>
+        <% } %>
+      </div>
+      <% let idx1=0; for (let nowLevel in levels) { %>
+      <div class="ui tab segment <%if(idx1==0){idx1=1;%>active<%}%>" data-tab="<%= nowLevel %>">
+        <% let idx3=0;for (let level of levels[nowLevel]) { %> 
+          <h3 class="ui dividing header"><%= level %></h3>
+          <div class="ui five column grid">
+            <% for (let mission of missions) { if (mission.level==level) { %>
+            <div class="column">
+              <a href="<%= syzoj.utils.makeUrl(['training', 'mission' ,mission.id]) %>">
+                <div class="ui card">
+                  <a href="<%= syzoj.utils.makeUrl(['training', 'mission' ,mission.id]) %>" class="ui slide masked reveal image">
+                    <img src="<%= mission.img_url %>">
+                  </a>
+                  <div class="content">
+                    <a href="<%= syzoj.utils.makeUrl(['training', 'mission' ,mission.id]) %>" class="header"><%= mission.name %></a>
+                    <div class="description" style="height: 80px;display: none;">
+                    <p><%= mission.description %></p>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <% } } %>
+          </div>
+        <% } %>
+      </div>
+      <% } %>
+    </div>
+
+</div>
+</div>
+    <div class="ui vertical footer segment" style="margin-top: 15px; ">
+      <div class="ui center aligned container">
+        <span style="color: #999;">浙ICP备18038694号 | <%= syzoj.config.title %></span>
+      </div>
+    </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.1.1/dist/jquery.min.js"> </script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-address@1.6.0/src/jquery.address.min.js"></script>
+<script data-cfasync="false" src="<%- lib('semantic-ui/2.4.1/semantic.min.js') %>"></script>
+<script src="<%- lib('Chart.js/2.7.3/Chart.bundle.min.js') %>"></script>
+<script src="<%- selfLib('script.js') %>?20191014"></script>
+<script>
+$('#context .menu .item')
+  .tab({
+    context: $('#context'),
+    history : true
+  })
+;
+</script>
+</body>
+</html>
+

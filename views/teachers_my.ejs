@@ -1,0 +1,21 @@
+<% this.title = '我的老师' %>
+<% include header %>
+
+<div class="padding">
+  <h2 class="ui dividing header">我的老师</h2>
+  <div class="ui four column grid">  
+      <% for (let user of teachers) { %>
+      <div class="column">
+        <div class="ui fluid card">
+          <div class="content">
+              <div class="header"><%= user.username %></div>
+              <div class="description" style="height : 50px"><%= user.information %> </div>
+            </div>
+          <a href="<%= syzoj.utils.makeUrl(['teacher', user.id]) %>" class="ui bottom attached button"><i class="search icon"></i> 查看 </a>
+        </div>
+      </div>
+      <% } %>
+  </div>
+</div>
+
+<% include footer %>

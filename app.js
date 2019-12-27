@@ -4,7 +4,9 @@ const fs = require('fs'),
       http = require('http'),
       serializejs = require('serialize-javascript'),
       UUID = require('uuid'),
-      commandLineArgs = require('command-line-args');
+      commandLineArgs = require('command-line-args'),
+      schedule = require('node-schedule'),
+      request = require('request');;
 
 const optionDefinitions = [
   { name: 'config', alias: 'c', type: String, defaultValue: __dirname + '/config.json' },
@@ -274,5 +276,20 @@ global.syzoj = {
     });
   }
 };
+
+
+//定时服务
+var test_schedule = schedule.scheduleJob('*/1 * * * *', function(){
+  console.log("start get codeforces.com");
+  try{
+    request('http://codeforces.com/api/contest.list', function (error, response, body) {
+      if (!error && response.statusCode == 200) {
+        fs.writeFileSync("contest.list",body);
+      }
+    });
+  }catch(e){
+    console.log(e);
+  }
+});
 
 syzoj.untilStarted = syzoj.run();

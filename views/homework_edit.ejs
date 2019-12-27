@@ -1,0 +1,75 @@
+<% this.title = '编辑作业' %>
+<% include header %>
+<% 
+  let levels = syzoj.config.training_levels;
+%>
+<div class="padding">
+  <form class="ui form" action="<%= syzoj.utils.makeUrl(['homework', homework.id, 'edit']) %>" method="post">
+      <div class="field">
+          <label>作业名称</label>
+          <input type="text" name="name" value="<%= homework.name %>">
+      </div>
+      <div class="field">
+          <label>试题列表</label>
+          <select class="ui fluid search dropdown" multiple="" id="search_problems" name="problems">
+          <% for (let problem of problems) { %>
+            <option value="<%= problem.id %>" selected>#<%= problem.id %>. <%= problem.title %></option>
+          <% } %>
+          </select>
+      </div>
+      <div class="field">
+          <label>学生列表</label>
+          <select class="ui fluid search dropdown" multiple="" id="search_users" name="users">
+          <% for (let student of students){ %>
+
+            <% if(users.includes((student.id).toString())){ %>
+              <option value="<%= student.id %>" selected> #<%= student.id %>. <%= student.username %> </option>
+            <% } else {%>
+              <option value="<%= student.id %>"> #<%= student.id %>. <%= student.username %> </option>
+            <% } %>
+          <% } %>
+          </select>
+      </div>
+      <div class="inline fields">
+        <label for="fruit">状态（选择作业是否启用）</label>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="active" value="1" checked="" tabindex="0" class="hidden">
+            <label>启用</label>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui radio checkbox">
+            <input type="radio" name="active" value="0" tabindex="0" class="hidden">
+            <label>归档</label>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; ">
+      <button type="submit" class="ui labeled submit icon button">
+        <i class="icon edit"></i> 提交  
+      </button>
+      </div>
+  </form>
+<script>
+$(function () {  
+  $('#search_users').dropdown();
+  $('.ui.radio.checkbox').checkbox();
+  $('#search_problems')
+    .dropdown({
+      debug: true,
+      apiSettings: {
+        url: '/api/v2/search/problems/{query}',
+        onResponse: function (response) {
+          var a = $('#search_problems').val().map(function (x) { return parseInt(x) });
+          if (response.results) {
+            response.results = response.results.filter(function(x) {return !a.includes(parseInt(x.value));});
+          }
+          return response;
+        },
+        cache: false
+      }
+    });
+});
+</script>
+<% include footer %>

@@ -5,6 +5,7 @@ declare var syzoj: any;
 
 import JudgeState from "./judge_state";
 import UserPrivilege from "./user_privilege";
+import TeacherStudent from "./teacher_student";
 import Article from "./article";
 
 @TypeORM.Entity()
@@ -62,6 +63,9 @@ export default class User extends Model {
 
   @TypeORM.Column({ nullable: true, type: "integer" })
   register_time: number;
+
+  @TypeORM.Column({ nullable: true, type: "varchar", length: 120 })
+  school: string;
 
   static async fromEmail(email): Promise<User> {
     return User.findOne({
@@ -189,6 +193,34 @@ export default class User extends Model {
 
     let x = await UserPrivilege.findOne({ where: { user_id: this.id, privilege: privilege } });
     return !!x;
+  }
+  
+  async hasStudent(user) {
+    if (! (await this.hasPrivilege("teacher")) ) return false;
+    let x = await TeacherStudent.findOne({ where: { teacher_id: this.id, user_id: user.id } });
+    return !!x;
+  }
+
+  async getStudents() {
+    let students;
+    let maps = await TeacherStudent.find({
+      where: {
+        teacher_id: this.id
+      }
+    });
+
+    students = maps.map(x => x.user_id);
+
+    students.sort((a, b) => {
+      return a.color > b.color ? 1 : -1;
+    });
+
+    return students;
+  }
+  async student_title(teacher) {
+    let x = await TeacherStudent.findOne({ where: { teacher_id: teacher.id, user_id: this.id } });
+    if(x) return x.title;
+    return null;
   }
 
   async getLastSubmitLanguage() {

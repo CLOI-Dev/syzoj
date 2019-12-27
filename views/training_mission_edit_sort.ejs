@@ -1,0 +1,60 @@
+<% this.title = '任务题目列表排序' %>
+<% include header %>
+<div class="padding">
+  <form class="ui form" action="<%= syzoj.utils.makeUrl(['training', 'mission', mission.id, 'edit_sort']) %>" method="post">
+      <div class="field">
+          <label>任务名称：<%= mission.name %> (拖动排序)</label>
+      </div>
+
+      <div class="field">
+        <div id="sort">
+          <% for (let problem of problems) { %>
+          <div class="item" data-id="<%=problem.id%>">
+            <h3>#<%= problem.id %>. <%= problem.title %></h3>
+          </div>
+          <% } %>
+        </div>
+      </div>
+
+      <div class="field">
+          <input type="text" id="problems" name="problems" value="<%=mission.problems%>">
+      </div>
+
+      <div style="text-align: center; ">
+      <button type="submit" class="ui labeled submit icon button">
+        <i class="icon edit"></i> 提交  
+      </button>
+      </div>
+  </form>
+</div>
+
+</div>
+    <div class="ui vertical footer segment" style="margin-top: 15px; ">
+      <div class="ui center aligned container">
+        <span style="color: #999;">浙ICP备18038694号 | <%= syzoj.config.title %></span>
+      </div>
+    </div>
+</div>
+
+<script data-cfasync="false" src="<%- lib('semantic-ui/2.4.1/semantic.min.js') %>"></script>
+<script src="<%- lib('Chart.js/2.7.3/Chart.bundle.min.js') %>"></script>
+<script src="<%- selfLib('script.js') %>?20191014"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery-sortablejs@latest/jquery-sortable.js"></script>
+<script>
+$(function(){
+  var sa=$('#sort').sortable({
+    animation: 150,
+    store: {
+		  set: function (sortable) {
+			  var order = sortable.toArray();
+			  $("#problems").attr("value",order.join('|'));
+		  }
+	  }
+  });
+});
+</script>
+
+</body>
+</html>
