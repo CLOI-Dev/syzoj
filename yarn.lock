@@ -29,10 +29,10 @@
   resolved "https://registry.npm.taobao.org/@types/lru-cache/download/@types/lru-cache-5.1.0.tgz#57f228f2b80c046b4a1bd5cac031f81f207f4f03"
   integrity sha1-V/Io8rgMBGtKG9XKwDH4HyB/TwM=
 
-"@types/node@*", "@types/node@^12.12.11":
-  version "12.12.18"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.18.tgz?cache=0&sync_timestamp=1576499222199&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.18.tgz#8d16634797d63c2af5bc647ce879f8de20b56469"
-  integrity sha1-jRZjR5fWPCr1vGR86Hn43iC1ZGk=
+"@types/node@*", "@types/node@^13.1.4":
+  version "13.1.4"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.1.4.tgz#4cfd90175a200ee9b02bd6b1cd19bc349741607e"
+  integrity sha512-Lue/mlp2egZJoHXZr4LndxDAd7i/7SQYhV0EjWfb/a4/OZ6tuVwMCVPiwkU5nsEipxEf7hmkSU7Em5VQ8P5NGA==
 
 abab@^2.0.0:
   version "2.0.3"
@@ -2352,13 +2352,13 @@ map-age-cleaner@^0.1.1:
   dependencies:
     p-defer "^1.0.0"
 
-mariadb@^2.0.3:
-  version "2.1.4"
-  resolved "https://registry.npm.taobao.org/mariadb/download/mariadb-2.1.4.tgz#95c149c4c34b8fe33b3b1c1923f9a6928441d940"
-  integrity sha1-lcFJxMNLj+M7OxwZI/mmkoRB2UA=
+mariadb@^2.1.5:
+  version "2.1.5"
+  resolved "https://registry.yarnpkg.com/mariadb/-/mariadb-2.1.5.tgz#7c172b33e5e37abd6c21ff435ecdf61e4963a85e"
+  integrity sha512-uRHtjc0bg+Rt91LvIaZNo8tLcYs9YPiiW9Mke/BavFzg0MnctJBDkqZW9X59NyrRGDd7Oz9UshTWgmUpfDZc0Q==
   dependencies:
     "@types/geojson" "^7946.0.7"
-    "@types/node" "^12.12.11"
+    "@types/node" "^13.1.4"
     denque "^1.4.1"
     iconv-lite "^0.5.0"
     long "^4.0.0"
