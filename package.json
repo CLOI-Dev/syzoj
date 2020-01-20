@@ -44,7 +44,7 @@
     "gravatar": "^1.8.0",
     "javascript-time-ago": "^2.0.4",
     "js-yaml": "^3.13.0",
-    "jsdom": "^15.2.1",
+    "jsdom": "^16.0.1",
     "jsondiffpatch": "0.3.11",
     "jsonwebtoken": "^8.5.1",
     "lru-cache": "^5.1.1",
