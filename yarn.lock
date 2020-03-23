@@ -29,10 +29,10 @@
   resolved "https://registry.npm.taobao.org/@types/lru-cache/download/@types/lru-cache-5.1.0.tgz#57f228f2b80c046b4a1bd5cac031f81f207f4f03"
   integrity sha1-V/Io8rgMBGtKG9XKwDH4HyB/TwM=
 
-"@types/node@*", "@types/node@^12.12.11":
-  version "12.12.18"
-  resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-12.12.18.tgz?cache=0&sync_timestamp=1576499222199&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-12.12.18.tgz#8d16634797d63c2af5bc647ce879f8de20b56469"
-  integrity sha1-jRZjR5fWPCr1vGR86Hn43iC1ZGk=
+"@types/node@*", "@types/node@>=8.0.0":
+  version "13.9.3"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-13.9.3.tgz#6356df2647de9eac569f9a52eda3480fa9e70b4d"
+  integrity sha512-01s+ac4qerwd6RHD+mVbOEsraDHSgUaefQlEdBbUolnQFjKwCr7luvAlEwW1RFojh67u0z4OUTjPn9LEl4zIkA==
 
 abab@^2.0.0:
   version "2.0.3"
@@ -1798,10 +1798,10 @@ iconv-lite@0.4.24:
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
-iconv-lite@^0.5.0:
-  version "0.5.0"
-  resolved "https://registry.npm.taobao.org/iconv-lite/download/iconv-lite-0.5.0.tgz#59cdde0a2a297cc2aeb0c6445a195ee89f127550"
-  integrity sha1-Wc3eCiopfMKusMZEWhle6J8SdVA=
+iconv-lite@^0.5.0, iconv-lite@^0.5.1:
+  version "0.5.1"
+  resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.5.1.tgz#b2425d3c7b18f7219f2ca663d103bddb91718d64"
+  integrity sha512-ONHr16SQvKZNSqjQT9gy5z24Jw+uqfO02/ngBSBoqChZ+W8qXX7GPRa1RoUnzGADw8K63R1BXUMzarCVQBpY8Q==
   dependencies:
     safer-buffer ">= 2.1.2 < 3"
 
@@ -2352,15 +2352,15 @@ map-age-cleaner@^0.1.1:
   dependencies:
     p-defer "^1.0.0"
 
-mariadb@^2.0.3:
-  version "2.1.4"
-  resolved "https://registry.npm.taobao.org/mariadb/download/mariadb-2.1.4.tgz#95c149c4c34b8fe33b3b1c1923f9a6928441d940"
-  integrity sha1-lcFJxMNLj+M7OxwZI/mmkoRB2UA=
+mariadb@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/mariadb/-/mariadb-2.3.1.tgz#bbc05c82aa4bf3fe58e54b1735e94a3a43fa4bff"
+  integrity sha512-suv+ygoiS+tQSKmxgzJsGV9R+USN8g6Ql+GuMo9k7alD6FxOT/lwebLHy63/7yPZfVtlyAitK1tPd7ZoFhN/Sg==
   dependencies:
     "@types/geojson" "^7946.0.7"
-    "@types/node" "^12.12.11"
+    "@types/node" ">=8.0.0"
     denque "^1.4.1"
-    iconv-lite "^0.5.0"
+    iconv-lite "^0.5.1"
     long "^4.0.0"
     moment-timezone "^0.5.27"
 
