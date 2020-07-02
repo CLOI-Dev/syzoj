@@ -48,7 +48,7 @@
     "jsondiffpatch": "0.3.11",
     "jsonwebtoken": "^8.5.1",
     "lru-cache": "^5.1.1",
-    "mariadb": "^2.0.3",
+    "mariadb": "^2.4.1",
     "moment": "^2.24.0",
     "msgpack-lite": "^0.1.26",
     "multer": "^1.4.2",
