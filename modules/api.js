@@ -5,7 +5,7 @@ const Email = require('../libs/email');
 const jwt = require('jsonwebtoken');
 
 function setLoginCookie(username, password, res) {
-  res.cookie('login', JSON.stringify([username, password]));
+  res.cookie('login', JSON.stringify([username, password]), { maxAge: 10 * 365 * 24 * 60 * 60 * 1000 });
 }
 
 // Login
@@ -271,6 +271,7 @@ app.post('/api/markdown', async (req, res) => {
 });
 
 app.get('/static/uploads/answer/:md5', async (req, res) => {
+  if (req.params.md5.indexOf('/') !== -1) return res.status(500).send('Not Found');
   try {
     //res.sendFile(File.resolvePath('answer', req.params.md5));
      if (!res.locals.user) throw new ErrorMessage('请登录后继续，很抱歉本OJ仅开放给校内使用。', { '登录': syzoj.utils.makeUrl(['login'], { 'url': req.originalUrl }) });
